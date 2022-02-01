@@ -19,6 +19,9 @@ Vagrant.configure("2") do |config|
   MACHINES.each do |boxname, boxconfig|
     # Disable shared folders
     config.vm.synced_folder ".", "/vagrant", disabled: true
+	# Problem wtih ssh
+	config.ssh.forward_agent = true
+    config.ssh.insert_key = false
     # Apply VM config
     config.vm.define boxname do |box|
       # Set VM base box and hostname
