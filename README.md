@@ -136,9 +136,9 @@ version of Packer...
 VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component MachineWrap, interface IMachine...          
 ```
 
-Решение - удаление строки в centos.json
+Решение - добавление строки в centos.json
 ```
-- "headless": "true",
++ "headless": "true",
 ```
 
 # **Заключение**
