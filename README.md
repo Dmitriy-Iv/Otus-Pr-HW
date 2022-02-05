@@ -73,9 +73,9 @@ packer version
 1. Проблема при подключении к машине по ssh - vagrant ssh, в связи с чем пришлось добавить в итоговый Vagrantfile (возможно было связанно и с другим):
 
 ```
- 	# Problem wtih ssh
-	config.ssh.forward_agent = true
-  config.ssh.insert_key = false
+# Problem wtih ssh
+config.ssh.forward_agent = true
+config.ssh.insert_key = false
 ```
 2. При работe c Packer:
 
@@ -138,7 +138,7 @@ VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component Machin
 
 Решение - удаление строки в centos.json
 ```
-+ "headless": "true",
+- "headless": "true",
 ```
 
 # **Заключение**
