@@ -1,8 +1,8 @@
 {
   "variables": {
-    "artifact_description": "CentOS 7.7 with kernel 5.x",
-    "artifact_version": "7.7.1908",
-    "image_name": "centos-7.7"
+    "artifact_description": "CentOS 7.9 with kernel 5.x",
+    "artifact_version": "7.9.2009",
+    "image_name": "centos-7.9"
   },
 
   "builders": [
@@ -15,6 +15,8 @@
       "disk_size": "10240",
       "guest_os_type": "RedHat_64",
       "http_directory": "http",
+      "guest_additions_mode": "disable",
+      "headless": "true",   
 
       "iso_url": "http://mirror.corbina.net/pub/Linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso",
       "iso_checksum": "07b94e6b1a0b0260b94c83d6bb76b26bf7a310dc78d7a9c7432809fb9bc6194a",
@@ -26,7 +28,7 @@
       "shutdown_command": "sudo -S /sbin/halt -h -p",
       "shutdown_timeout" : "5m",
 
-      "ssh_wait_timeout": "20m",
+      "ssh_wait_timeout": "30m",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -35,8 +37,8 @@
       "output_directory": "builds",
 
       "vboxmanage": [
-        [  "modifyvm",  "{{.Name}}",  "--memory",  "1024" ],
-        [  "modifyvm",  "{{.Name}}",  "--cpus",  "2" ]
+        [  "modifyvm",  "{{.Name}}",  "--memory",  "2048" ],
+        [  "modifyvm",  "{{.Name}}",  "--cpus",  "4" ]
       ],
 
       "export_opts":
