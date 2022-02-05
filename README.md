@@ -1,6 +1,6 @@
 # **Введение**
 
-Все ниже описанные действия производятся на компьютере с установленным `Windows 10`. Изначально производилась установка Centos 7 и Debian 11 в виртуальную машину через Virtual Box. Однако в процессе выполнения ДЗ выяснилось, что с Nested virtualization операции внутри виртуальной машины с установленным VirtualBox, Vagrant, Packer происходят в разы дольше, чем указанные временные параметры в файлах Vagrant. Соотвественно тестовый стенд был собран на хостовой машины с Windows 10.
+Все ниже описанные действия производятся на компьютере с установленным `Windows 10`. Изначально производилась установка Centos 7 и Debian 11 в виртуальную машину через Virtual Box. Однако в процессе выполнения ДЗ выяснилось, что с Nested virtualization операции внутри виртуальной машины с установленным VirtualBox, Vagrant, Packer происходят в разы дольше, чем на хостовой машине. Соотвественно тестовый стенд был собран на хостовой машины с Windows 10.
 
 Для выполнения работы потребуются следующие инструменты:
 
@@ -65,21 +65,21 @@ packer version
 На локальном компьютере запускаем GitHub Desktop - File - Clone Repository - URL - вставляем раннее скопированную ссылку - указываем локальную папку, где сохранить репозиторий - нажимаем Clone. Теперь у вас на компьютере локальная копия репозитория, с которым и продолжаем работать.
 
 ### **Создаём Box с обновлённым ядром (Centos 7.9.2009 / Kernel - 5.16.5)**
-Для обучения, сначала проводим ручные операции по обновлению ядра, который описаны в методичке - https://github.com/dmitry-lyutenko/manual_kernel_update/blob/master/manual/manual.md. Далее собираем собственный Box и выкладываем его на Vagrant Cloud. Все действия расписаны в вышеукзанной методичке, так что смысла в их copy-paste не вижу. Однако ниже приведу ошибки, который появлялись, пока я пытался собрать сначала тестовую лабу с Nested virtualization на хостовой VM - Centos 7, а потом уже на хосте с Windows 10.
+Для обучения, сначала проводим ручные операции по обновлению ядра, который описаны в методичке - https://github.com/dmitry-lyutenko/manual_kernel_update/blob/master/manual/manual.md. Далее собираем собственный Box и выкладываем его на Vagrant Cloud. Все действия расписаны в вышеукзанной методичке, так что смысла в их copy-paste не вижу. Однако ниже приведу ошибки, которые появлялись, пока я пытался собрать сначала тестовую лабу с Nested virtualization на хостовой VM - Centos 7, а потом уже на хосте с Windows 10.
 
 В ходе выполнения ДЗ появлялись следующие ошибки:
 
 
-1. Подклечением к машине по ssh - vagrant ssh, в связис чем пришлось добавить в итоговый Vagrant file (возможно было связанно и с другим):
+1. Проблема при подключении к машине по ssh - vagrant ssh, в связи с чем пришлось добавить в итоговый Vagrantfile (возможно было связанно и с другим):
 
 ```
  	# Problem wtih ssh
 	config.ssh.forward_agent = true
-    config.ssh.insert_key = false
+  config.ssh.insert_key = false
 ```
 2. При работe c Packer:
 
-- `при переходе к запуску скриптов sh - пользователь vagrant не в sudoers`,
+- `При переходе к запуску скриптов sh - пользователь vagrant не в sudoers`,
 ```
 ==> centos-7.7: Provisioning with shell script: scripts/stage-1-kernel-update.sh
    centos-7.7: >>> /etc/sudoers.d/vagrant: syntax error near line 1 <<<
@@ -102,7 +102,7 @@ packer version
 + echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant
 ```
 
-- `ошибка из-за временного интервала`,
+- `Ошибка из-за временного интервала`,
 ```
 ==> centos-7.7: Timeout waiting for SSH.          
 ```
@@ -118,7 +118,7 @@ packer version
       ],
 ```
 
-- `ошибка из-за параметра "iso_checksum_type": "sha256",`,
+- `Ошибка из-за параметра "iso_checksum_type": "sha256",`,
 ```
 ==>Deprecated configuration key: 'iso_checksum_type'. Please call `packer fix`
 against your template to update your template to be compatible with the current
@@ -130,7 +130,7 @@ version of Packer...
 -"iso_checksum_type": "sha256",
 ```
 
-- `при работе с Nested Virtualization`,
+- `При работе с Nested Virtualization`,
 ```
 ==>VBoxManage error: VBoxManage: error: The virtual machine 'packer-centos-vm' has terminated unexpectedly during startup because of signal 6
 VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component MachineWrap, interface IMachine...          
